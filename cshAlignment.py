@@ -1,29 +1,17 @@
 import random
-
-print("""*************************************
-***  여러가지 정렬 프로그램 구현  ***
-***                               ***
-*** 1. 선택(selection) 정렬       ***
-*** 2. 삽입(insertion) 정렬       ***
-*** 3. 버블(bubble) 정렬          ***
-*** 4. 퀵(quick) 정렬             ***
-*** 5. 합병(merge) 정렬           ***
-*** 6. 힙(heap) 정렬              ***
-*** 7. 종료(quit)                 ***
-*************************************""")
-
-#선택 정렬
+import time
+#1.선택 정렬
 def selection_sort(A):
-    n = len(A)
-    for i in range(n-1):
-        least = i
-        for j in range(i+1, n):
-            if A[j] < A[least]:
-                least = j
+    n = len(A) #리스트 길이를 n 에 저장
+    for i in range(n-1): #리스트 길이만큼 돌기
+        least = i #i 를 least 라고 두기
+        for j in range(i+1, n): #i+1 부터 리스트 길이 즉 끝까지 돌기
+            if A[j] < A[least]: # 만약 j가 least 보다 작으면 
+                least = j #j를 least로 두기 
         A[i], A[least] = A[least], A[i]
-        print("Step", i+1, "=", A)
+    return A
 
-#삽입 정렬
+#2.삽입 정렬
 def insertion_sort(A):
     n = len(A)
     for i in range(1,n):
@@ -33,24 +21,24 @@ def insertion_sort(A):
             A[j+1] = A[j]
             j-=1
         A[j+1] = key
-        print("Step", i, "=", A)
+    return A
 
-#버블 정렬
+#3.버블 정렬
 def bubble_sort(A):
     n = len(A)
     for i in range(n-1,0,-1):
-        bChanged = False
+      #  bChanged = False
         for j in range(i):
             if A[j] > A[j+1]:
-                A[j], A[j+A] = A[j+1], A[j]
-                bChanged = True
-        if not bChanged : break
-        print("Step", n-i, "=", A)
+                A[j], A[j+1] = A[j+1], A[j]
+                #bChanged = True
+       # if not bChanged : break
+    return A
 
 
-#퀵 정렬
+#4.퀵 정렬
 def quick_sort(A, left, right):
-    print("quick_sort(A,",left, right, ")")
+   # print("quick_sort(A,",left, right, ")")
     if left < right:
         i = left + 1
         j = right
@@ -61,18 +49,18 @@ def quick_sort(A, left, right):
             while j >= left and A[j] > pivot:
                 j-=1
             if j < j:
-                A[i], A[j] = A[j], A[i]; print_qs(A)
-        A[left], A[j] = A[j], A[left]; print_qs(A)
+                A[i], A[j] = A[j], A[i]#; print_qs(A)
+        A[left], A[j] = A[j], A[left]#; print_qs(A)
         quick_sort(A, left, j-1)
         quick_sort(A, j+1, right)
-s = 1
+# s = 1
 
-def print_qs(A):
-    global s
-    print("Step", s, "=", A)
-    s += 1
+# def print_qs(A):
+#     global s
+#     print("Step", s, "=", A)
+#     s += 1
 
-# 합병 정렬
+# 5.합병 정렬
 s = 1
 def merge(A, left, mid, right):
     print("merge (",left, ",", mid, ",", right, ")")
@@ -109,7 +97,7 @@ def merge_sort(A, left, right):
         merge(A, left, mid, right)
 
     
-#힙 정렬(힙을 이용한 정렬)
+#6.힙 정렬(힙을 이용한 정렬)
 def heappush(heap, n):
     heap.append(n)
     i = len(heap) - 1
@@ -146,30 +134,49 @@ def heap_sort(data):
         data[-i] = heappop(heap)
 
 
-#힙 정렬(제자리정렬로 구현한 힙정렬)
-def heapify(arr, n, i) :
-    largest = i
-    l = 2*i
-    r = 2*i + 1
+
+
+print("""************************************************
+***  여러가지 정렬 프로그램 구현             ***
+***                                          ***
+*** 1. 선택(selection) 정렬                  ***
+*** 2. 삽입(insertion) 정렬                  ***
+*** 3. 버블(bubble) 정렬                     ***
+*** 4. 퀵(quick) 정렬                        ***
+*** 5. 합병(merge) 정렬                      ***
+*** 6. 힙 정렬(힙을 이용한 정렬)(heap) 정렬  ***
+*** 7. 종료(quit)                            ***
+************************************************""")
+time.sleep(2)
+
+while True:
+    num = int(input("원하는 정렬의 번호를 입력하세요 : "))
+    random_numbers = [random.randint(0, 100) for _ in range(25)]
+    if num == 7:
+        print("정렬 프로그램이 종료되었습니다.")
+        break
+    elif num == 1:
+        print("선택 정렬전 리스트 : ",random_numbers)
+        rn = selection_sort(random_numbers)
+        print("선택 정렬후 리스트 : ", rn)
+    elif num == 2:
+        print("삽입 정렬전 리스트 : ",random_numbers)
+        rn = insertion_sort(random_numbers)
+        print("삽입 정렬후 리스트 : ", rn)
+    elif num == 3:
+        print("버블 정렬전 리스트 : ",random_numbers)
+        rn = bubble_sort(random_numbers)
+        print("버블 정렬후 리스트 : ", rn)
+    elif num == 4:
+        print("퀵 정렬전 리스트 : ",random_numbers)
+        rn = quick_sort(random_numbers)
+        print("퀵 정렬후 리스트 : ", rn)
+    elif num == 5:
+        print("합병 정렬전 리스트 : ",random_numbers)
+        rn = merge_sort(random_numbers)
+        print("합병 정렬후 리스트 : ", rn)
+    elif num == 6:
+        print("힙 정렬전 리스트 : ",random_numbers)
+        rn = heap_sort(random_numbers)
+        print("힙 정렬후 리스트 : ", rn)
     
-    if l <= n and arr[i] < arr[l]:
-        largest = l
-    if r <= n and arr[largest] < arr[r]:
-        largest = r
-
-    if largest != i:
-        arr[i], arr[largest] = arr[largest], arr[i]
-        heapify(arr, n, largest)
-        
-def heapSort(arr):
-    n = len(arr) - 1
-    for i in range(n//2, 0, -1):
-        heapify(arr, n, i)
-        print("i =", i, arr)
-
-    for i in range(n-1, 0, -1):
-        arr[i+1], arr[1] = arr[1], arr[i+1]
-        heapify(arr, i, 1)
-        print("i =", i, arr)
-
-
